@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', function () {
         fetchData('/foods/spread')
     ]).then(([breadData, fillingData, spreadData]) => {
         const sandwichGroup = createMenuGroup('Sandwich', [
-            createMenuCategory('Bread', breadData, `${API_URL}/image/burger_bun.png`),
-            createMenuCategory('Fillings', fillingData, `${API_URL}/image/fillings.png`),
-            createMenuCategory('Spreads', spreadData, `${API_URL}/image/spreads.png`)
+            createMenuCategory('Bread', breadData, `${API_URL}/static/uploads/burger_bun.png`),
+            createMenuCategory('Fillings', fillingData, `${API_URL}/static/uploads/fillings.png`),
+            createMenuCategory('Spreads', spreadData, `${API_URL}/static/uploads/spreads.png`)
         ]);
         
         foodMenuSection.appendChild(sandwichGroup);
@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }));
         
         const drinksGroup = createMenuGroup('Drinks', [
-            createMenuCategory('Flavors', formattedFlavors, `${API_URL}/image/drinks.png`),
-            createMenuCategory('Add-ons', addonData, `${API_URL}/image/addons.png`)
+            createMenuCategory('Flavors', formattedFlavors, `${API_URL}/static/uploads/drinks.png`),
+            createMenuCategory('Add-ons', addonData, `${API_URL}/static/uploads/addons.png`)
         ]);
         
         foodMenuSection.appendChild(drinksGroup);
