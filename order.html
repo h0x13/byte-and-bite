@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte & Bite Ordering System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="order-style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Byte & Bite Ordering System</h1>
+
+        <!-- Menu Section -->
+        <div class="menu" id="menu">
+            <!-- Sandwich Section -->
+            <h2>Sandwich</h2>
+            <!-- Bread, Fillings, and Spread categories will be dynamically populated here -->
+        </div>
+
+        <!-- Drinks Section -->
+        <!-- Flavors, Sizes, and Add-ons will be dynamically populated here -->
+
+        <!-- Order Summary Section -->
+        <h2>Order Summary</h2>
+        <div id="cart"></div>
+        <p>Total: <span id="total">₱0</span></p>
+        <button id="clearCart">Clear Cart</button>
+
+        <!-- Customer Details Section -->
+        <h2>Customer Details</h2>
+        <label for="pickup-delivery">Pickup or Delivery:</label>
+        <select id="pickup-delivery">
+            <option value="pickup">Pickup</option>
+            <option value="delivery">Delivery</option>
+        </select>
+
+        <!-- Delivery Details (hidden by default) -->
+        <div id="delivery-details" style="display: none;">
+            <label for="address">Address:</label>
+            <input type="text" id="address" placeholder="Enter your address">
+            <label for="landmark">Landmark:</label>
+            <input type="text" id="landmark" placeholder="Nearest landmark">
+        </div>
+
+        <!-- Payment Method -->
+        <label for="payment-method">Payment Method:</label>
+        <select id="payment-method">
+            <option value="cash">Cash on Pickup/Delivery</option>
+            <option value="gcash">GCash</option>
+            <option value="card">Credit/Debit Card</option>
+        </select>
+
+        <!-- GCash Details (hidden by default) -->
+        <div id="gcash-details" style="display: none;">
+            <h3>Scan to Pay</h3>
+            <img src="images/gcashqr.jfif" alt="GCash QR Code" id="gcash-qr" width="200">
+            <label for="gcash-receipt">Upload Payment Screenshot:</label>
+            <input type="file" id="gcash-receipt" accept="image/*">
+        </div>
+
+        <!-- Customization Notes -->
+        <label for="custom-notes">Customization Notes:</label>
+        <textarea id="custom-notes" placeholder="Any special requests?"></textarea>
+
+        <!-- Place Order Button -->
+        <button id="placeOrder">Place Order</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 BYTE & BiTE. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="app.js"></script>
+    <script>
+        // Handle pickup/delivery toggle
+        document.getElementById("pickup-delivery").addEventListener("change", function() {
+            document.getElementById("delivery-details").style.display = this.value === "delivery" ? "block" : "none";
+        });
+
+        // Handle payment method toggle
+        document.getElementById("payment-method").addEventListener("change", function() {
+            document.getElementById("gcash-details").style.display = this.value === "gcash" ? "block" : "none";
+        });
+    </script>
+</body>
+</html>

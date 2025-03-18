@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYTE&BiTE | Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>  
+    <header>
+        <div class="header">
+            <div class="logo">
+                <img src="./images/logo.png" alt="BYTE&BiTE Logo">
+            </div>
+            <div class="nav">
+                <ul>
+                    <a href="index.html"><li>Home</li></a>
+                    <a href="#"><li>About</li></a>
+                    <a href="menu.html"><li>Food Menu</li></a>
+                    <a href="order.html"><li>Book Order</li></a>
+                </ul>
+            </div>
+            <div class="account">
+                <ul>
+                    <a href="#"><li><i class="fa-solid fa-house-chimney"></i></li></a>
+                    <a href="#"><li><i class="fa-solid fa-magnifying-glass searchicon" id="searchicon2"></i></li></a>
+                    <div class="search" id="searchinput2">
+                        <input type="search">
+                        <i class="fa-solid fa-magnifying-glass srchicon"></i>
+                    </div>
+                    <a href="#"><li><i class="fa-solid fa-user" id="user-lap"></i></li></a>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="home">
+        <div class="main_slide">
+            <div>
+                <h1>Welcome!<span> Enjoy the goodness</span> of BYTE&BiTE!</h1>
+                <p>"Smart bites, Fast byte."</p>
+                <p>BYTE&BiTE is a product created by the ABM students of Urdaneta City National High School to serve a one-of-a-kind food experience to its customers.</p>
+
+                <a href="order.html">
+                    <button class="red_btn">Hop in! <i class="fa-solid fa-arrow-right-long"></i></button>
+                </a>
+            </div>
+            <div>
+                <img src="./images/sandwich2.1.png" alt="Sandwich Image">
+            </div>
+        </div>
+
+        <div class="food-items">
+            <div class="item">
+                <div>
+                    <img src="./images/sandwich.png" alt="Sandwich">
+                </div>
+                <h3>Sandwich</h3>
+                <p>Sets of spread and filling combined between slices of bread, created to perfection.</p>
+                <a href="menu.html"><button class="white_btn">See Menu</button></a> 
+            </div>
+            <div class="item">
+                <div>
+                    <img src="./images/drinks.png" alt="Drinks">
+                </div>
+                <h3>Drinks</h3>
+                <p>Variations of fruit juices squeezed to quench and refresh the body.</p>
+                <a href="menu.html"><button class="red_btn">See Menu</button></a> 
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <h3>BYTE & BiTE</h3>
+                <p>"Smart bites, Fast byte."</p>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Contact Us</h4>
+                <p>Email: <a href="mailto:byteandbitebusiness@gmail.com">byteandbitebusiness@gmail.com</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/byteandbite" target="_blank">@BYTE&BiTE</a></p>
+            </div>
+
+            <div class="footer-logo">
+                <img src="images/logo.png" alt="BYTE & BiTE Logo">
+                <p>Powered by BYTE & BiTE</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 BYTE & BiTE. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
+</body>
+</html>
