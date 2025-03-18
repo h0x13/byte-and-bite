@@ -151,12 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        let orderSummary = "Order Summary:\n";
-        cart.forEach(item => {
-            orderSummary += `${item.name} - ₱${item.price}\n`;
-        });
-        orderSummary += `Total: ₱${total}\n\n`;
-
         let customerDetails = `Pickup/Delivery: ${pickupDelivery.value}\n`;
         if (pickupDelivery.value === "delivery") {
             customerDetails += `Address: ${document.getElementById("address").value}\n`;
@@ -168,8 +162,32 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         customerDetails += `Customization Notes: ${document.getElementById("custom-notes").value}\n`;
 
-        alert(orderSummary + customerDetails + "\nThank you for your order!");
-        cart = [];
-        updateCart();
+        fetch(`${API_URL}/order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                customer_name: 'Unknown',
+                items: cart,
+                payment_method: paymentMethod.value,
+                service_type: pickupDelivery.value,
+            })
+        }).then(response => response.json())
+        .then(data => {
+            alert(orderSummary + customerDetails + "\nThank you for your order!");
+            cart = [];
+            updateCart();
+            console.log(data);
+        }).catch(error => {
+            console.error('Transaction Error: ', error);
+        })
+
+        let orderSummary = "Order Summary:\n";
+        cart.forEach(item => {
+            orderSummary += `${item.name} - ₱${item.price}\n`;
+        });
+        orderSummary += `Total: ₱${total}\n\n`;
     });
 });

@@ -100,10 +100,18 @@ function populateMenu(foods, drinks) {
 
         // For flavors, only display each flavor once
         if (category === 'flavor') {
-            const uniqueFlavors = [...new Set(items.map(item => item.name))];
-            uniqueFlavors.forEach(flavor => {
+            const uniqueFlavors = {};
+
+            items.forEach(item => {
+                if (!uniqueFlavors[item.name]) {
+                    uniqueFlavors[item.name] = [item.name, item.image];
+                }
+            });
+
+            Object.entries(uniqueFlavors).forEach(([id, [flavor, image]]) => {
                 const button = document.createElement('button');
                 button.className = 'item';
+                button.style.backgroundImage = `url(https://${image})`;
                 button.setAttribute('data-name', flavor);
                 button.textContent = flavor;
                 itemsDiv.appendChild(button);
@@ -163,6 +171,7 @@ function createItemButton(item) {
     button.className = 'item';
     button.setAttribute('data-name', item.name);
     button.setAttribute('data-price', item.price);
+    button.style.backgroundImage = `url(https://${item.image})`;
     // button.setAttribute('data-id', item.id);
     button.textContent = `${item.name} (₱${item.price})`;
     return button;
@@ -240,42 +249,65 @@ document.getElementById('clearCart')?.addEventListener('click', () => {
     updateCart();
 });
 
-// Handle order placement
-document.getElementById('placeOrder')?.addEventListener("click", function () {
-    if (cart.length === 0) {
-        alert("Your cart is empty. Please add items to place an order.");
-        return;
-    }
+// Handle payment and delivery options
+document.addEventListener("DOMContentLoaded", function () {
+    fetchMenu();
+    const paymentMethod = document.getElementById("payment-method");
+    const gcashDetails = document.getElementById("gcash-details");
+    const pickupDelivery = document.getElementById("pickup-delivery");
+    const deliveryDetails = document.getElementById("delivery-details");
 
-    let orderSummary = "Order Summary:\n";
-    cart.forEach(item => {
-        orderSummary += `${item.name} - ₱${item.price}\n`;
+    paymentMethod?.addEventListener("change", function () {
+        gcashDetails.style.display = this.value === "gcash" ? "block" : "none";
     });
 
-    orderSummary += `Total: ₱${total}\n\n`;
+    pickupDelivery?.addEventListener("change", function () {
+        deliveryDetails.style.display = this.value === "delivery" ? "block" : "none";
+    });
 
+    document.getElementById('placeOrder')?.addEventListener("click", function () {
+        if (cart.length === 0) {
+            alert("Your cart is empty. Please add items to place an order.");
+            return;
+        }
 
-    fetch(`${API_URL}/order`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-            customer_name: 'java',
-            items: cart,
+        let customerDetails = `Pickup/Delivery: ${pickupDelivery.value}\n`;
+        if (pickupDelivery.value === "delivery") {
+            customerDetails += `Address: ${document.getElementById("address").value}\n`;
+            customerDetails += `Landmark: ${document.getElementById("landmark").value}\n`;
+        }
+        customerDetails += `Payment Method: ${paymentMethod.value}\n`;
+        if (paymentMethod.value === "gcash") {
+            customerDetails += "Please upload your GCash payment screenshot.\n";
+        }
+        customerDetails += `Customization Notes: ${document.getElementById("custom-notes").value}\n`;
+
+        fetch(`${API_URL}/order`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                customer_name: 'Unknown',
+                items: cart,
+                payment_method: paymentMethod.value,
+                service_type: pickupDelivery.value,
+            })
+        }).then(response => response.json())
+        .then(data => {
+            alert(orderSummary + customerDetails + "\nThank you for your order!");
+            cart = [];
+            updateCart();
+            console.log(data);
+        }).catch(error => {
+            console.error('Transaction Error: ', error);
         })
-    }).then(response => response.json())
-    .then(data => {
-        alert(orderSummary + "\nThank you for your order!");
-        cart = [];
-        updateCart();
-        console.log(data);
-    }).catch(error => {
-        console.error('Transaction Error: ', error);
-    })
 
+        let orderSummary = "Order Summary:\n";
+        cart.forEach(item => {
+            orderSummary += `${item.name} - ₱${item.price}\n`;
+        });
+        orderSummary += `Total: ₱${total}\n\n`;
+    });
 });
-
-// Fetch menu on page load
-document.addEventListener("DOMContentLoaded", fetchMenu);
