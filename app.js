@@ -271,16 +271,21 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        const customer_name = document.getElementById('customer_name').value;
+        const notes = document.getElementById("custom-notes").value;
+        const address = document.getElementById("address").value;
+        const landmark = document.getElementById("landmark").value;
+
         let customerDetails = `Pickup/Delivery: ${pickupDelivery.value}\n`;
         if (pickupDelivery.value === "delivery") {
-            customerDetails += `Address: ${document.getElementById("address").value}\n`;
-            customerDetails += `Landmark: ${document.getElementById("landmark").value}\n`;
+            customerDetails += `Address: ${address}\n`;
+            customerDetails += `Landmark: ${landmark}\n`;
         }
         customerDetails += `Payment Method: ${paymentMethod.value}\n`;
         if (paymentMethod.value === "gcash") {
             customerDetails += "Please upload your GCash payment screenshot.\n";
         }
-        customerDetails += `Customization Notes: ${document.getElementById("custom-notes").value}\n`;
+        customerDetails += `Customization Notes: ${notes}\n`;
 
         fetch(`${API_URL}/order`, {
             method: 'POST',
@@ -289,7 +294,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Accept': 'application/json'
             },
             body: JSON.stringify({
-                customer_name: 'Unknown',
+                customer_name: customer_name,
+                landmark: landmark,
+                address: address,
                 items: cart,
                 payment_method: paymentMethod.value,
                 service_type: pickupDelivery.value,
