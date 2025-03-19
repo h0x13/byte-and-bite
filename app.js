@@ -5,7 +5,8 @@ let selectedDrinkFlavor = "";
 // Drink prices will be populated dynamically from the API
 let drinkPrices = {};
 
-const API_URL = 'https://jetzukaizen.pythonanywhere.com'
+// const API_URL = 'https://jetzukaizen.pythonanywhere.com'
+const API_URL = 'http://127.0.0.1:5000'
 
 // Fetch and display menu items
 async function fetchMenu() {
@@ -111,7 +112,7 @@ function populateMenu(foods, drinks) {
             Object.entries(uniqueFlavors).forEach(([id, [flavor, image]]) => {
                 const button = document.createElement('button');
                 button.className = 'item';
-                button.style.backgroundImage = `url(https://${image})`;
+                button.style.backgroundImage = `url(http://${image})`;
                 button.setAttribute('data-name', flavor);
                 button.textContent = flavor;
                 itemsDiv.appendChild(button);
@@ -171,7 +172,7 @@ function createItemButton(item) {
     button.className = 'item';
     button.setAttribute('data-name', item.name);
     button.setAttribute('data-price', item.price);
-    button.style.backgroundImage = `url(https://${item.image})`;
+    button.style.backgroundImage = `url(http://${item.image})`;
     // button.setAttribute('data-id', item.id);
     button.textContent = `${item.name} (₱${item.price})`;
     return button;
@@ -256,6 +257,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const gcashDetails = document.getElementById("gcash-details");
     const pickupDelivery = document.getElementById("pickup-delivery");
     const deliveryDetails = document.getElementById("delivery-details");
+    const gcashPeceipt = document.getElementById("gcash-receipt");
+    let recieptPayload = null;
 
     paymentMethod?.addEventListener("change", function () {
         gcashDetails.style.display = this.value === "gcash" ? "block" : "none";
@@ -263,6 +266,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     pickupDelivery?.addEventListener("change", function () {
         deliveryDetails.style.display = this.value === "delivery" ? "block" : "none";
+    });
+
+    gcashPeceipt.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.addEventListener('load', () => {
+            const base64image = reader.result.split(",")[1];
+            recieptPayload = JSON.stringify({
+                image: base64image,
+                filename: file.name,
+                type: file.type,
+            })
+        });
     });
 
     document.getElementById('placeOrder')?.addEventListener("click", function () {
@@ -295,11 +312,13 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({
                 customer_name: customer_name,
+                customization_notes: notes,
                 landmark: landmark,
                 address: address,
                 items: cart,
                 payment_method: paymentMethod.value,
                 service_type: pickupDelivery.value,
+                image: recieptPayload,
             })
         }).then(response => response.json())
         .then(data => {
