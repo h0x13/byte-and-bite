@@ -224,13 +224,17 @@ label {
 }
 
 input, select, textarea {
-    width: 100%;
     padding: 10px;
     border: 1px solid #64b5f6;
     border-radius: 5px;
     font-size: 16px;
     background: #bbdefb;
     color: #0d47a1;
+}
+
+#customerDetails {
+    display: flex;
+    flex-direction: column;
 }
 
 textarea {

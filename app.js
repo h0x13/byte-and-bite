@@ -288,6 +288,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const customer_name = document.getElementById('customer_name').value;
+        const contact = document.getElementById("contact").value;
         const notes = document.getElementById("custom-notes").value;
         const address = document.getElementById("address").value;
         const landmark = document.getElementById("landmark").value;
@@ -311,6 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             body: JSON.stringify({
                 customer_name: customer_name,
+                contact: contact,
                 customization_notes: notes,
                 landmark: landmark,
                 address: address,
@@ -321,10 +323,14 @@ document.addEventListener("DOMContentLoaded", function () {
             })
         }).then(response => response.json())
         .then(data => {
-            alert(orderSummary + customerDetails + "\nThank you for your order!");
-            cart = [];
-            updateCart();
-            console.log(data);
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert(orderSummary + customerDetails + "\nThank you for your order!");
+                cart = [];
+                updateCart();
+                console.log(data);
+            }
         }).catch(error => {
             console.error('Transaction Error: ', error);
         })
