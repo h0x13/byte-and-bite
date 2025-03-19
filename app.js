@@ -111,7 +111,7 @@ function populateMenu(foods, drinks) {
             Object.entries(uniqueFlavors).forEach(([id, [flavor, image]]) => {
                 const button = document.createElement('button');
                 button.className = 'item';
-                button.style.backgroundImage = `url(http://${image})`;
+                button.style.backgroundImage = `url(https://${image})`;
                 button.setAttribute('data-name', flavor);
                 button.textContent = flavor;
                 itemsDiv.appendChild(button);
@@ -171,7 +171,7 @@ function createItemButton(item) {
     button.className = 'item';
     button.setAttribute('data-name', item.name);
     button.setAttribute('data-price', item.price);
-    button.style.backgroundImage = `url(http://${item.image})`;
+    button.style.backgroundImage = `url(https://${item.image})`;
     // button.setAttribute('data-id', item.id);
     button.textContent = `${item.name} (₱${item.price})`;
     return button;
