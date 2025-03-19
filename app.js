@@ -16,7 +16,7 @@ async function fetchMenu() {
         const drinks = await drinksResponse.json();
 
         // Populate drinkPrices dynamically
-        // populateDrinkPrices(drinks);
+        populateDrinkPrices(drinks);
 
         // Populate the menu
         populateMenu(foods, drinks);
