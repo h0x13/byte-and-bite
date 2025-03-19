@@ -5,8 +5,7 @@ let selectedDrinkFlavor = "";
 // Drink prices will be populated dynamically from the API
 let drinkPrices = {};
 
-// const API_URL = 'https://jetzukaizen.pythonanywhere.com'
-const API_URL = 'http://127.0.0.1:5000'
+const API_URL = 'https://jetzukaizen.pythonanywhere.com'
 
 // Fetch and display menu items
 async function fetchMenu() {
